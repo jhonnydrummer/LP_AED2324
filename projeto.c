@@ -202,7 +202,7 @@ int decimal_to_binary(int value){
     //array com os valores de binario
     int binary[32];
     int i;
-    for ( i = 0; value > 0; i++) {
+    for (i = 0; value > 0; i++) {
         // storing remainder in binary array
         binary[i] = value % 2;
         value = value / 2;
