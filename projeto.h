@@ -25,7 +25,7 @@ void remove_from_matrix(char ** c1, int row, int collum, int numRow, int numColl
 
 void check_segment(char segment);
 
-void seach_string(char string);
+void seach_string(const char *sequence, const char *words[], int numWords);
 
 void sort_crescent();
 

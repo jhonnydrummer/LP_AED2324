@@ -266,10 +266,20 @@ void remove_from_matrix(char ** matrix, int row, int collum, int numRow, int num
 }
 
 /** req 4 **/
-void check_segment(char segment){}
+void check_segment(char segment){
+
+}
 
 /** req 5 **/
-void seach_string(char string){}
+void seach_string(const char *sequencia, const char *palavra[], int numPalavras){
+
+    for (int i = 0; i < numPalavras; i++) {
+        //Verifica se a sequência de pesquisa ocorre na palavra
+        if (strstr(palavra[i], sequencia) != NULL) {
+            printf("%s\n", palavra[i]);
+        }
+    }
+}
 
 /** req 6 **/
 void sort_crescent(){}
