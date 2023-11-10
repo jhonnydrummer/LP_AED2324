@@ -37,6 +37,7 @@
 #include "stdlib.h"
 #include "string.h"
 #include "projeto.h"
+#include "ctype.h"
 
 #define NULL0 -1;
 #define NUMROWS 10
@@ -98,8 +99,21 @@ void print_Matrix(char** matrix, int lines, int cols) {
 int decimal_to_binary(int value){
     //  printf("TESTE-> valor em decimal fica %d\n", value);
     //array com os valores de binario
+    // counter for binary array
+    int i = 0;
+    int binaryNum[8];
+    while (value > 0) {
+        // storing remainder in binary array
+        binaryNum[i] = value % 2;
+        value = value / 2;
+        i++;
+    }
+    // printing binary array in reverse order
+    for (int j = i - 1; j >= 0; j--)
+        printf("%d", binaryNum[j]);
+    // matriz[][]=binaryNum[j]
 
-
+    return 0;//return pointer para matriz
 }
 
 /** req 2 **/
@@ -112,11 +126,19 @@ int string_to_binary(char * string){
      */
 
     int size = strlen(string);
+    int value;
 
     printf("The string in binary is ");
-    for (int i = 0; i < size; i++) {
 
-        printf("%d ", decimal_to_binary(string[i])) ;
+    for (int i = 0; i < size; i++) {
+        value=string[i]-'0';
+        if(isupper(string[i])){
+            value=value+19;
+        } else {
+            value=value-39;
+        }
+       decimal_to_binary(value);
+        printf("%d",value);
     }
     printf("\n");
 
