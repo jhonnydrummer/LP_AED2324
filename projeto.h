@@ -4,6 +4,7 @@
 
 #ifndef PROJETOLPAED1_PROJETO_H
 #define PROJETOLPAED1_PROJETO_H
+#define MAXCOLUMNS 10
 
 /**exemplo de uma estrutura**/
 typedef struct ex{
@@ -19,7 +20,7 @@ int decimal_to_binary(int value);
 
 int string_to_binary(char * string);
 
-void add_to_matrix(char ** c1, int row, int collum, int numRow, int numCollum, char * value);
+void add_to_matrix(char matrix[][MAXCOLUMNS], int rows, int cols);
 
 void remove_from_matrix(char ** c1, int row, int collum, int numRow, int numCollum);
 
