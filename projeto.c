@@ -114,7 +114,8 @@ int decimal_to_binary(int value){
         printf("%d", binaryNum[j]);
     // matriz[][]=binaryNum[j]
 
-    return value;//return pointer para matriz
+    return 0;//return pointer para matriz
+
 }
 
 /** req 2 **/
@@ -138,7 +139,9 @@ int string_to_binary(char * string){
         } else {
             value=value-39;
         }
+
         decimal_to_binary(value);
+
         printf("%d",value);
     }
     printf("\n");
