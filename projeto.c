@@ -38,6 +38,7 @@
 #include "string.h"
 #include "projeto.h"
 #include "ctype.h"
+#include <time.h>
 
 #define NULL0 -1;
 #define NUMROWS 10
@@ -62,7 +63,7 @@ char** create_Dynamic_Matrix(int lines, int cols) {
 
 void free_Dynamic_Matrix(char** matrix, int lines) {
     for (int i = 0; i < lines; i++) {
-        free(matrix+i);
+        free(matrix[i]);
     }
     free(matrix);
 }
@@ -151,24 +152,25 @@ int string_to_binary(char * string){
  * para teste primeiro damos print a matriz inicial e depois print com a insercao
  *
  * **/
-/**void add_to_matrix(char ** matrix, int row, int collum, int numRow, int numCollum, char * value){
+
+void add_to_matrix(char ** matrix, int row, int collum, int numRow, int numCollum, char * value){
    if(row >=0 && row < numRow && collum >=0 && collum < numCollum){
-       matrix[row][collum] = *value;
+       *(*(matrix+row)+collum) = *value;
        string_to_binary(value);
    }
    else{
        printf("invalid insert\n");
    }
-}**/
+}
 
-// será necessaria esta função?
+/*
 void add_to_matrix(DynamicMatrix *matrix, int row, int col, char value) {
     if (matrix != NULL && row >= 0 && row < matrix->rows && col >= 0 && col < matrix->cols) {
         *(*(matrix->data + row) + col) = value;
     } else {
         printf("Posição inválida na matriz.\n");
     }
-}
+}*/
 
 /** req 3 **/
 void remove_from_matrix(DynamicMatrix *matrix, int row, int col) {
@@ -213,7 +215,7 @@ void seach_string(const char *sequencia, const char *palavra[], int numPalavras)
 /** req 6 **/
 void sort_crescent(){
     /**
-     *  implementação do quicksort (qsort)?
+     *  implementação do merge sort (sugestão Prof. Torres)
      */
 
 }
@@ -243,23 +245,36 @@ int main_projeto(int argc, const char * argv[]) {
     int colunasC1 = 10;
     int linhasC2 = 4;
     int colunasC2 = 10;
+    char* valor = (char *) &dadosC1;
 
+    //Criação da matrix c1
     char **DynamicMatrixC1 = (char **) create_Dynamic_Matrix(linhasC1, colunasC1);
     fill_Matrix(DynamicMatrixC1, linhasC1, colunasC1, dadosC1);
 
+    //Criação da matrix c2
     char **DynamicMatrixC2 = create_Dynamic_Matrix(linhasC2, colunasC2);
     fill_Matrix(DynamicMatrixC2, linhasC2, colunasC2, dadosC2);
 
-    // Imprimir as matrizes dinâmicas
+    // Imprimir as matrizes dinâmicas para teste
     printf("Matriz Dinâmica C1:\n");
     print_Matrix(DynamicMatrixC1, linhasC1, colunasC1);
 
     printf("\nMatriz Dinâmica C2:\n");
     print_Matrix(DynamicMatrixC2, linhasC2, colunasC2);
 
-    // libertar memoria
-    free_Dynamic_Matrix(DynamicMatrixC1, linhasC1);
-    free_Dynamic_Matrix(DynamicMatrixC2, linhasC2);
+   /* teste decimal to binary e string to binary
+    * decimal to binary com os numeros funciona bem, o string to binary não está a dar o
+    * resultado esperado, por exemplo "aba" segundo o enunciado tem que dar:
+    * 101010111010 , mas deu isto : 101010101111101010
+    */
+
+    //decimal_to_binary(8);
+    //string_to_binary("aba");
+
+    add_to_matrix(DynamicMatrixC1, 3, 4, 4,5,valor);
+   //  a usar notação array funciona, apontadores já não(nao sei porquê)
+   free_Dynamic_Matrix(DynamicMatrixC1, linhasC1);
+   free_Dynamic_Matrix(DynamicMatrixC2, linhasC2);
 
     return 0;
 }
