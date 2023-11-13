@@ -37,18 +37,18 @@
 #include "stdlib.h"
 #include "string.h"
 #include "projeto.h"
+#include "ctype.h"
 
 #define NULL0 -1;
 #define NUMROWS 10
 #define NUMCOLS 7
 
-EX ex;
+DynamicMatrix dynamicMatrix;
 
 char * UFP6[] = { //UFP6 CORRIGIDO
-        // 0   1     2     3      4      5      6      7       8       9        a       b       c      d       e       f       g        h        i        j         k       l        m         n        o       p        q         r        s       t         u        v         w        x            y       z         A         B          C         D        E         F         G         H         I         J         K         L         M         N         O         P         Q         R         S        T          U         V        W          X         Y       Z
+        // 0          1           2         3         4           5          6           7          8           9           a              b           c            d            e            f            g            h              i            j              k             l             m            n             o             p             q              r            s             t             u             v              w             x                y             z              A             B              C               D             E               F             G               H              I              J             K               L              M            N               O                P              Q              R             S               T               U               V              W            X               Y             Z
         "0",  "1",  "10", "11",  "100", "101", "110", "111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111", "10000", "10001", "10010", "10011", "10100", "10101", "10110", "10111", "11000", "11001", "11010", "11011", "11100", "11101", "11110", "11111", "100000", "100001", "100010", "100011", "100100", "100101", "100110", "100111", "101000", "101001", "101010", "101011", "101100", "101101", "101110", "101111", "110000", "110001", "110010", "110011", "110100", "110101", "110110", "110111", "111000", "111001", "111010", "111011", "111100", "111101",
 };
-
 
 
 char** create_Dynamic_Matrix(int lines, int cols) {
@@ -95,11 +95,26 @@ void print_Matrix(char** matrix, int lines, int cols) {
  *
  *
  * **/
+
+/** req 2 **/
 int decimal_to_binary(int value){
     //  printf("TESTE-> valor em decimal fica %d\n", value);
     //array com os valores de binario
+    // counter for binary array
+    int i = 0;
+    int binaryNum[8];
+    while (value > 0) {
+        // storing remainder in binary array
+        binaryNum[i] = value % 2;
+        value = value / 2;
+        i++;
+    }
+    // printing binary array in reverse order
+    for (int j = i - 1; j >= 0; j--)
+        printf("%d", binaryNum[j]);
+    // matriz[][]=binaryNum[j]
 
-
+    return value;//return pointer para matriz
 }
 
 /** req 2 **/
@@ -112,11 +127,19 @@ int string_to_binary(char * string){
      */
 
     int size = strlen(string);
+    int value;
 
     printf("The string in binary is ");
-    for (int i = 0; i < size; i++) {
 
-        printf("%d ", decimal_to_binary(string[i])) ;
+    for (int i = 0; i < size; i++) {
+        value=string[i]-'0';
+        if(isupper(string[i])){
+            value=value+19;
+        } else {
+            value=value-39;
+        }
+        decimal_to_binary(value);
+        printf("%d",value);
     }
     printf("\n");
 
@@ -139,20 +162,35 @@ int string_to_binary(char * string){
 }**/
 
 // será necessaria esta função?
-void add_to_matrix(char matrix[][MAXCOLUMNS], int rows, int cols)
-{
-
+void add_to_matrix(DynamicMatrix *matrix, int row, int col, char value) {
+    if (matrix != NULL && row >= 0 && row < matrix->rows && col >= 0 && col < matrix->cols) {
+        *(*(matrix->data + row) + col) = value;
+    } else {
+        printf("Posição inválida na matriz.\n");
+    }
 }
 
 /** req 3 **/
-void remove_from_matrix(char ** matrix, int row, int collum, int numRow, int numCollum){
-    if(row >=0 && row < numRow && collum >=0 && collum < numCollum){
-        printf("Value deleted -> %c\n", matrix[row][collum]);
-        string_to_binary(&matrix[row][collum]);
-        matrix[row][collum] = NULL0;
-    }
-    else{
-        printf("invalid insert\n");
+void remove_from_matrix(DynamicMatrix *matrix, int row, int col) {
+    if (matrix != NULL && row >= 0 && row < matrix->rows && col >= 0 && col < matrix->cols) {
+        // Deslocar os elementos da matriz para cobrir a posição removida
+        for (int i = row; i < matrix->rows - 1; i++) {
+            for (int j = col; j < matrix->cols - 1; j++) {
+                *(*(matrix->data + i) + j) = *(*(matrix->data + i + 1) + j + 1);
+            }
+        }
+
+        // Reduzir o número de linhas e colunas na matriz
+        matrix->rows--;
+        matrix->cols--;
+
+        // Realocar memória para a matriz com o novo tamanho
+        matrix->data = (char **)realloc(matrix->data, matrix->rows * sizeof(char *));
+        for (int i = 0; i < matrix->rows; i++) {
+            matrix->data[i] = (char *)realloc(matrix->data[i], matrix->cols * sizeof(char));
+        }
+    } else {
+        printf("Posição inválida na matriz.\n");
     }
 }
 
@@ -173,7 +211,12 @@ void seach_string(const char *sequencia, const char *palavra[], int numPalavras)
 }
 
 /** req 6 **/
-void sort_crescent(){}
+void sort_crescent(){
+    /**
+     *  implementação do quicksort (qsort)?
+     */
+
+}
 
 /** req 6 **/
 void sort_decrescent(){}

@@ -6,23 +6,21 @@
 #define PROJETOLPAED1_PROJETO_H
 #define MAXCOLUMNS 10
 
-/**exemplo de uma estrutura**/
-typedef struct ex{
-    int ex1;
-    int ex2;
-    char ex3 [1][1];
-}EX;
+/**possivel estrutura**/
+typedef struct {
+    char **data;
+    int rows;
+    int cols;
+} DynamicMatrix;
 
 
 int main_projeto(int argc, const char * argv[]);
 
-int decimal_to_binary(int value);
+char * content_to_binary(char * string);
 
-int string_to_binary(char * string);
+void add_to_matrix(DynamicMatrix *matrix, int rows, int cols, char value);
 
-void add_to_matrix(char matrix[][MAXCOLUMNS], int rows, int cols);
-
-void remove_from_matrix(char ** c1, int row, int collum, int numRow, int numCollum);
+void remove_from_matrix(DynamicMatrix *matrix, int row, int col);
 
 void check_segment(char segment);
 
