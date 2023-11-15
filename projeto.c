@@ -102,6 +102,7 @@ int decimal_to_binary(int value){
     //  printf("TESTE-> valor em decimal fica %d\n", value);
     //array com os valores de binario
     // counter for binary array
+    printf("The string in binary is ");
     int i = 0;
     int binaryNum[8];
     while (value > 0) {
@@ -111,6 +112,8 @@ int decimal_to_binary(int value){
         i++;
     }
     // printing binary array in reverse order
+
+
     for (int j = i - 1; j >= 0; j--)
         printf("%d", binaryNum[j]);
     // matriz[][]=binaryNum[j]
@@ -128,22 +131,20 @@ int string_to_binary(char * string){
      * enviar esse char para a funçao decimal_to_binary
      */
 
-    int size = strlen(string);
+    size_t size = strlen(string);
     int value;
-
-    printf("The string in binary is ");
 
     for (int i = 0; i < size; i++) {
         value=string[i]-'0';
         if(isupper(string[i])){
             value=value+19;
-        } else {
-            value=value-39;
+            decimal_to_binary(value);
+        } else if(value<9){
+            decimal_to_binary(value);
+        }else {
+            value = value - 39;
+            decimal_to_binary(value);
         }
-
-        decimal_to_binary(value);
-
-        printf("%d",value);
     }
     printf("\n");
 
@@ -271,8 +272,8 @@ int main_projeto(int argc, const char * argv[]) {
     * 101010111010 , mas deu isto : 101010101111101010
     */
 
-    //decimal_to_binary(8);
-    //string_to_binary("aba");
+    decimal_to_binary(8);
+    string_to_binary("a1A");
 
     add_to_matrix(DynamicMatrixC1, 3, 4, 4,5,valor);
    //  a usar notação array funciona, apontadores já não(nao sei porquê)
