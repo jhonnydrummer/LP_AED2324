@@ -112,8 +112,6 @@ int decimal_to_binary(int value){
         i++;
     }
     // printing binary array in reverse order
-
-
     for (int j = i - 1; j >= 0; j--)
         printf("%d", binaryNum[j]);
     // matriz[][]=binaryNum[j]
@@ -139,7 +137,7 @@ int string_to_binary(char * string){
         if(isupper(string[i])){
             value=value+19;
             decimal_to_binary(value);
-        } else if(value<9){
+        } else if(value<=9){
             decimal_to_binary(value);
         }else {
             value = value - 39;
@@ -273,7 +271,7 @@ int main_projeto(int argc, const char * argv[]) {
     */
 
     decimal_to_binary(8);
-    string_to_binary("a1A");
+    string_to_binary("a9A");
 
     add_to_matrix(DynamicMatrixC1, 3, 4, 4,5,valor);
    //  a usar notação array funciona, apontadores já não(nao sei porquê)
