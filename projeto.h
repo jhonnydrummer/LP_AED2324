@@ -18,7 +18,11 @@ int main_projeto(int argc, const char * argv[]);
 
 char * content_to_binary(char * string);
 
-void add_to_matrix(char ** matrix, int row, int collum, int numRow, int numCollum, char * value);
+//void add_to_matrix(char ** matrix, int row, int collum, int numRow, int numCollum, char * value, const char *palavra);
+
+void add_to_matrix(char **matrix, int row, int collum, int numRow, int numCollum, const char *palavra);
+
+char gerarPalavraAleatoria(char *palavra, int tamanho);
 
 void remove_from_matrix(DynamicMatrix *matrix, int row, int col);
 

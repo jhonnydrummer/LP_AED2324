@@ -43,7 +43,8 @@
 #define NULL0 -1;
 #define NUMROWS 10
 #define NUMCOLS 7
-
+#define LINES 10
+#define COLS 10
 DynamicMatrix dynamicMatrix;
 
 char * UFP6[] = { //UFP6 CORRIGIDO
@@ -76,9 +77,9 @@ void fill_Matrix(char** matrix, int lines, int cols, char dados[10][10]) {
     }
 }
 
-void print_Matrix(char** matrix, int lines, int cols) {
-    for (int i = 0; i < lines; i++) {
-        for (int j = 0; j < cols; j++) {
+void print_Matrix(char** matrix, int numRow, int numCollum) {
+    for (int i = 0; i < numRow; i++) {
+        for (int j = 0; j < numCollum; j++) {
             printf("%c ", *(*(matrix+i)+j));
         }
         printf("\n");
@@ -98,11 +99,11 @@ void print_Matrix(char** matrix, int lines, int cols) {
  * **/
 
 /** req 2 **/
-int decimal_to_binary(int value){
+int decimal_to_binary(int value) {
     //  printf("TESTE-> valor em decimal fica %d\n", value);
     //array com os valores de binario
     // counter for binary array
-    printf("The string in binary is ");
+    printf("\nThe string in binary is ");
     int i = 0;
     int binaryNum[8];
     while (value > 0) {
@@ -112,60 +113,48 @@ int decimal_to_binary(int value){
         i++;
     }
     // printing binary array in reverse order
-    for (int j = i - 1; j >= 0; j--)
+    for (int j = i - 1; j >= 0; j--) {
         printf("%d", binaryNum[j]);
-    // matriz[][]=binaryNum[j]
+        // matriz[][]=binaryNum[j]
 
-    return 0;//return pointer para matriz
 
-}
 
-/** req 2 **/
-int string_to_binary(char * string){
-
-    /** a idea é pegar na string original
-     * tirar o size
-     * correr em loop e separar a string em diferentes char
-     * enviar esse char para a funçao decimal_to_binary
-     */
-
-    size_t size = strlen(string);
-    int value;
-
-    for (int i = 0; i < size; i++) {
-        value=string[i]-'0';
-        if(isupper(string[i])){
-            value=value+19;
-            decimal_to_binary(value);
-        } else if(value<=9){
-            decimal_to_binary(value);
-        }else {
-            value = value - 39;
-            decimal_to_binary(value);
-        }
     }
-    printf("\n");
-
-    return 0;
+    return 0;//return pointer para matriz
 }
+/** req 2 **/
+    int string_to_binary(char *string) {
 
-/** req 3
- * aqui podemos definir onde colocamos os determinados valores dentro das matrizes
- * para teste primeiro damos print a matriz inicial e depois print com a insercao
- *
- * **/
+        /** a idea é pegar na string original
+         * tirar o size
+         * correr em loop e separar a string em diferentes char
+         * enviar esse char para a funçao decimal_to_binary
+         */
 
-void add_to_matrix(char ** matrix, int row, int collum, int numRow, int numCollum, char * value){
-   if(row >=0 && row < numRow && collum >=0 && collum < numCollum){
-       *(*(matrix+row)+collum) = *value;
-       string_to_binary(value);
-   }
-   else{
-       printf("invalid insert\n");
-   }
-}
+        size_t size = strlen(string);
+        int value;
+
+        for (int i = 0; i < size; i++) {
+            value = string[i] - '0';
+            if (isupper(string[i])) {
+                value = value + 19;
+                decimal_to_binary(value);
+            } else if (value <= 9) {
+                decimal_to_binary(value);
+            } else {
+                value = value - 39;
+                decimal_to_binary(value);
+            }
+        }
+        printf("\n");
+
+        return 0;
+    }
 
 /*
+ *
+ * funlção para infserir os dados num char e uma nos binarios ou seja uma big função para 2 mini funções
+ * função para chamar structs pois estas vao ter
 void add_to_matrix(DynamicMatrix *matrix, int row, int col, char value) {
     if (matrix != NULL && row >= 0 && row < matrix->rows && col >= 0 && col < matrix->cols) {
         *(*(matrix->data + row) + col) = value;
@@ -174,109 +163,172 @@ void add_to_matrix(DynamicMatrix *matrix, int row, int col, char value) {
     }
 }*/
 
-/** req 3 **/
-void remove_from_matrix(DynamicMatrix *matrix, int row, int col) {
-    if (matrix != NULL && row >= 0 && row < matrix->rows && col >= 0 && col < matrix->cols) {
-        // Deslocar os elementos da matriz para cobrir a posição removida
-        for (int i = row; i < matrix->rows - 1; i++) {
-            for (int j = col; j < matrix->cols - 1; j++) {
-                *(*(matrix->data + i) + j) = *(*(matrix->data + i + 1) + j + 1);
-            }
-        }
+char gerarPalavraAleatoria(char *palavra, int tamanho) {
+    const char caracteresPermitidos[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    int lenCaracteresPermitidos = strlen(caracteresPermitidos);
 
-        // Reduzir o número de linhas e colunas na matriz
-        matrix->rows--;
-        matrix->cols--;
-
-        // Realocar memória para a matriz com o novo tamanho
-        matrix->data = (char **)realloc(matrix->data, matrix->rows * sizeof(char *));
-        for (int i = 0; i < matrix->rows; i++) {
-            matrix->data[i] = (char *)realloc(matrix->data[i], matrix->cols * sizeof(char));
-        }
-    } else {
-        printf("Posição inválida na matriz.\n");
+    for (int i = 0; i < tamanho - 1; i++) {
+        palavra[i] = caracteresPermitidos[rand() % lenCaracteresPermitidos];
     }
+
+    palavra[tamanho - 1] = '\0'; // Adicionar o char nulo no final
+    printf(" %s", palavra);
+
+    return *palavra;
 }
+
+/** req 3
+ * aqui podemos definir onde colocamos os determinados valores dentro das matrizes
+ * para teste primeiro damos print a matriz inicial e depois print com a insercao
+ *
+ * **/
+
+
+    void add_to_matrix(char **Matrix1, int row, int collum, int numRow, int numCollum, const char *palavra) {
+        if (row >= 0 && row < numRow && collum >= 0 && collum < numCollum) {
+            *(*(Matrix1 + row) + collum) = *palavra;
+            //string_to_binary(value);
+            //print_Matrix(matrix, row,collum);
+            //gerarPalavraAleatoria(palavra, 7);
+            strncpy((*(Matrix1 + row) + collum), palavra, strlen(palavra));
+        } else {
+            printf("invalid insert\n");
+        }
+    }
+
+/** req 3 **/
+    void remove_from_matrix(DynamicMatrix *matrix, int row, int col) {
+        if (matrix != NULL && row >= 0 && row < matrix->rows && col >= 0 && col < matrix->cols) {
+            // Deslocar os elementos da matriz para cobrir a posição removida
+            for (int i = row; i < matrix->rows - 1; i++) {
+                for (int j = col; j < matrix->cols - 1; j++) {
+                    *(*(matrix->data + i) + j) = *(*(matrix->data + i + 1) + j + 1);
+                }
+            }
+
+            // Reduzir o número de linhas e colunas na matriz
+            matrix->rows--;
+            matrix->cols--;
+
+            // Realocar memória para a matriz com o novo tamanho
+            matrix->data = (char **) realloc(matrix->data, matrix->rows * sizeof(char *));
+            for (int i = 0; i < matrix->rows; i++) {
+                matrix->data[i] = (char *) realloc(matrix->data[i], matrix->cols * sizeof(char));
+            }
+        } else {
+            printf("Posição inválida na matriz.\n");
+        }
+    }
 
 /** req 4 **/
-void check_segment(char segment){
+    void check_segment(char segment) {
 
-}
+    }
 
 /** req 5 **/
-void seach_string(const char *sequencia, const char *palavra[], int numPalavras){
+    void seach_string(const char *sequencia, const char *palavra[], int numPalavras) {
 
-    for (int i = 0; i < numPalavras; i++) {
-        //Verifica se a sequência de pesquisa ocorre na palavra
-        if (strstr(palavra[i], sequencia) != NULL) {
-            printf("%s\n", palavra[i]);
+        for (int i = 0; i < numPalavras; i++) {
+            //Verifica se a sequência de pesquisa ocorre na palavra
+            if (strstr(palavra[i], sequencia) != NULL) {
+                printf("%s\n", palavra[i]);
+            }
         }
     }
-}
 
 /** req 6 **/
-void sort_crescent(){
-    /**
-     *  implementação do merge sort (sugestão Prof. Torres)
-     */
+    void sort_crescent() {
+        /**
+         *  implementação do merge sort (sugestão Prof. Torres)
+         */
 
-}
+    }
 
 /** req 6 **/
-void sort_decrescent(){}
+    void sort_decrescent() {
+        /**
+         *  implementação do merge sort ou MSD para os chars(sugestão Prof. Torres)
+         */
+    }
 
-int main_projeto(int argc, const char * argv[]) {
+    int main_projeto(int argc, const char *argv[]) {
 
-    char dadosC1[10][10] = {
-            {'o'},
-            {'O', 'l', 'a'},
-            {'x', 'p', 't', 'o'},
-            {'L', 'P'},
-            {'1'},
-            {'a', 'b', 'a'}
-    };
+        srand(time(NULL)); //gera a aleatoriedade
 
-    char dadosC2[10][10] = {
-            {'b'},
-            {'M', 'u', 'n', 'D', 'o'},
-            {'P', 'L'},
-            {'1', '1'}
-    };
+        char dadosC1[10][10] = {
+                {'o'},
+                {'O', 'l', 'a'},
+                {'x', 'p', 't', 'o'},
+                {'L', 'P'},
+                {'1'},
+                {'a', 'b', 'a'}
+        };
 
-    int linhasC1 = 6;
-    int colunasC1 = 10;
-    int linhasC2 = 4;
-    int colunasC2 = 10;
-    char* valor = (char *) &dadosC1;
+        char dadosC2[10][10] = {
+                {'b'},
+                {'M', 'u', 'n', 'D', 'o'},
+                {'P', 'L'},
+                {'1', '1'}
+        };
 
-    //Criação da matrix c1
-    char **DynamicMatrixC1 = (char **) create_Dynamic_Matrix(linhasC1, colunasC1);
-    fill_Matrix(DynamicMatrixC1, linhasC1, colunasC1, dadosC1);
+        int linhasC1 = 6;
+        int colunasC1 = 10;
+        int linhasC2 = 10;
+        int colunasC2 = 10;
+        char palavra[8];
+        char *valor = (char *) &palavra;
 
-    //Criação da matrix c2
-    char **DynamicMatrixC2 = create_Dynamic_Matrix(linhasC2, colunasC2);
-    fill_Matrix(DynamicMatrixC2, linhasC2, colunasC2, dadosC2);
+        //Criação da matrix TESTE c1
+        char **DynamicMatrixC1 = (char **) create_Dynamic_Matrix(linhasC1, colunasC1);
+        fill_Matrix(DynamicMatrixC1, linhasC1, colunasC1, dadosC1);
 
-    // Imprimir as matrizes dinâmicas para teste
-    printf("Matriz Dinâmica C1:\n");
-    print_Matrix(DynamicMatrixC1, linhasC1, colunasC1);
+        //Criação da matrix TESTE c2
+        char **DynamicMatrixC2 = create_Dynamic_Matrix(linhasC2, colunasC2);
+        fill_Matrix(DynamicMatrixC2, linhasC2, colunasC2, dadosC2);
 
-    printf("\nMatriz Dinâmica C2:\n");
-    print_Matrix(DynamicMatrixC2, linhasC2, colunasC2);
+        //Criação da matrix Matrix1
+        char **Matrix1 = create_Dynamic_Matrix(LINES, COLS);
+        fill_Matrix(Matrix1, LINES, COLS, (char[10]) palavra);
 
-   /* teste decimal to binary e string to binary
-    * decimal to binary com os numeros funciona bem, o string to binary não está a dar o
-    * resultado esperado, por exemplo "aba" segundo o enunciado tem que dar:
-    * 101010111010 , mas deu isto : 101010101111101010
-    */
+        /** Imprimir as matrizes para teste
+         *
+         *  printf("Matriz Dinâmica C1:\n");
+         *  print_Matrix(DynamicMatrixC1, linhasC1, colunasC1);
+         *  printf("\nMatriz Dinâmica C2:\n");
+         *  print_Matrix(DynamicMatrixC2, linhasC2, colunasC2);
+         *
+         */
 
-    decimal_to_binary(8);
-    string_to_binary("a9A");
+        print_Matrix(Matrix1, linhasC1,colunasC1);
 
-    add_to_matrix(DynamicMatrixC1, 3, 4, 4,5,valor);
-   //  a usar notação array funciona, apontadores já não(nao sei porquê)
-   free_Dynamic_Matrix(DynamicMatrixC1, linhasC1);
-   free_Dynamic_Matrix(DynamicMatrixC2, linhasC2);
+        /* teste decimal to binary e string to binary
+         * decimal to binary com os numeros funciona bem, o string to binary não está a dar o
+         * resultado esperado, por exemplo "aba" segundo o enunciado tem que dar:
+         * 101010111010 , mas deu isto : 101010101111101010
+         */
 
-    return 0;
-}
+        //   decimal_to_binary(8);
+        string_to_binary("a9A");
+        gerarPalavraAleatoria((char *) Matrix1, 20);
+
+        // Exemplo de uso
+        int numRow = 5;
+        int numCollum = 5;
+
+        char **matrix = malloc(numRow * sizeof(char *));
+        for (int i = 0; i < numRow; i++) {
+            matrix[i] = malloc(numCollum * sizeof(char));
+        }
+
+        gerarPalavraAleatoria(palavra, 7);
+
+        add_to_matrix(Matrix1, 2, 3, numRow, numCollum, palavra);
+        //add_to_matrix(DynamicMatrixC1, 3, 4, 4, 5, valor,palavra);
+        // a usar notação array funciona, apontadores já não(nao sei porquê)
+        /*
+         * free_Dynamic_Matrix(DynamicMatrixC1, linhasC1);
+         * free_Dynamic_Matrix(DynamicMatrixC2, linhasC2);
+         */
+
+        return 0;
+    }
