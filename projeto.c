@@ -387,7 +387,9 @@ void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, in
 
         //Criação da matrix Matrix1
         char **Matrix1 = create_Dynamic_Matrix(LINES, COLS);
-        fill_Matrix(Matrix1, LINES, COLS, (char[10]) palavra);
+        fill_Matrix(Matrix1, LINES, COLS, palavra);
+
+        //fill_Matrix(Matrix1, LINES, COLS, (char[10]) palavra);
 
         /** Imprimir as matrizes para teste
          *
