@@ -34,7 +34,8 @@ void sort_crescent(int *vetor, int tamanho);
 void sort(int *vetor, int *vAuxiliar , int posicaoInicial , int posicaoFinal);
 void merge(int *vetor, int *vAuxiliar , int posicaoInicial , int metade , int posicaoFinal);
 
-void sort_decrescent();
+void sort_decrescent(int *vetor, int tamanho);
+void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, int posicaoFinal);
 
 char * create_matrix(int numRows, int numCollums, char ** matrix);
 
