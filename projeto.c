@@ -246,7 +246,6 @@ char gerarPalavraAleatoria(char *palavra, int tamanho) {
         int *vAuxiliar = malloc(sizeof(int)*tamanho);
         //Chamando a função sort para começar o processo de divisão do vetor
         sort(vetor,vAuxiliar,0,tamanho-1);
-        //Limpando a memória alocada
         free(vAuxiliar);
 
     }
@@ -318,7 +317,6 @@ char gerarPalavraAleatoria(char *palavra, int tamanho) {
     int *vAuxiliar = malloc(sizeof(int)*tamanho);
     //Chamando a função sort para começar o processo de divisão do vetor
     sort_inverso(vetor,vAuxiliar,0,tamanho / 2, tamanho-1);
-    //Limpando a memória alocada
     free(vAuxiliar);
     }
 
