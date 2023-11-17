@@ -30,7 +30,9 @@ void check_segment(char segment);
 
 void seach_string(const char *sequence, const char *words[], int numWords);
 
-void sort_crescent();
+void sort_crescent(int *vetor, int tamanho);
+void sort(int *vetor, int *vAuxiliar , int posicaoInicial , int posicaoFinal);
+void merge(int *vetor, int *vAuxiliar , int posicaoInicial , int metade , int posicaoFinal);
 
 void sort_decrescent();
 

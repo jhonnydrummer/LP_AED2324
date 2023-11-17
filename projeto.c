@@ -3,7 +3,7 @@
     * PROJETO REALIZADO POR:                                                                                           *
     * - PEDRO MARQUES - 38688                                                                                          *
     * - PEDRO MONTEIRO  -                                                                                              *
-    * - DIONE ARANTES -                                                                                                *
+    * - DIONE ARANTES - 40395                                                                                             *
     * ==================================================================================================================
     * @todo
     * 2
@@ -153,7 +153,7 @@ int decimal_to_binary(int value) {
 
 /*
  *
- * funlção para infserir os dados num char e uma nos binarios ou seja uma big função para 2 mini funções
+ * funlção para inserir os dados num char e uma nos binarios ou seja uma big função para 2 mini funções
  * função para chamar structs pois estas vao ter
 void add_to_matrix(DynamicMatrix *matrix, int row, int col, char value) {
     if (matrix != NULL && row >= 0 && row < matrix->rows && col >= 0 && col < matrix->cols) {
@@ -237,12 +237,77 @@ char gerarPalavraAleatoria(char *palavra, int tamanho) {
     }
 
 /** req 6 **/
-    void sort_crescent() {
+    void sort_crescent(int *vetor, int tamanho) {
         /**
          *  implementação do merge sort (sugestão Prof. Torres)
          */
 
+        //Alocando um espaço na memória para servir de vetor auxiliar
+        int *vAuxiliar = malloc(sizeof(int)*tamanho);
+        //Chamando a função sort para começar o processo de divisão do vetor
+        sort(vetor,vAuxiliar,0,tamanho-1);
+        //Limpando a memória alocada
+        free(vAuxiliar);
+
     }
+
+    void sort(int *vetor, int *vAuxiliar , int posicaoInicial , int posicaoFinal){
+        //Verificando se o vetor tem tamanho maior que 1
+        if(posicaoInicial>=posicaoFinal)
+            return;
+
+        //Com o vetor de tamanho maior que 1 ele divide esse vetor pegando a posicao que fica na metade do vetor;
+        int metade = (posicaoInicial+posicaoFinal) / 2;
+
+        //Fazendo uma chamada recursiva para ordenar a primeira metade do vetor
+        sort(vetor,vAuxiliar,posicaoInicial,metade);
+        //Fazendo uma chamada recursiva para ordenar a segunda metade do vetor
+        sort(vetor,vAuxiliar,metade+1,posicaoFinal);
+
+        //Faz uma verificação para saber se os vetores estão ordenados entre si
+        if(vetor[metade]<=vetor[metade+1])
+            return;
+
+        //Chamando a função merge para reorganizar o vetor
+        merge(vetor,vAuxiliar,posicaoInicial,metade,posicaoFinal);
+
+    }
+
+    void merge(int *vetor, int *vAuxiliar , int posicaoInicial , int metade , int posicaoFinal){
+
+        int contador;
+        //Armazena a posição inicial do vetor principal
+        int inicioVetor = posicaoInicial;
+        //Armazena a posição inicial do vetor auxiliar
+        int inicioVAuxiliar = metade + 1;
+
+        //Fazendo uma cópia do vetor princpal para o vetor auxiliar
+        for(contador = posicaoInicial ; contador <= posicaoFinal ; contador ++)
+            vAuxiliar[contador]=vetor[contador];
+
+        //Reiniciando o contador
+        contador = posicaoInicial;
+
+        //Percorrendo os vetores
+        while(inicioVetor <= metade && inicioVAuxiliar <= posicaoFinal){
+            //Verifica qual valores são maior e menor  e reorganiza o vator principal
+            if(vAuxiliar[inicioVetor]<vAuxiliar[inicioVAuxiliar])
+                vetor[contador++]=vAuxiliar[inicioVetor++];
+            else
+                vetor[contador++]=vAuxiliar[inicioVAuxiliar++];
+
+        }
+
+        //Passando o que sobrar da primeira metade para o vetor principal
+        while(inicioVetor<=metade)
+            vetor[contador++] = vAuxiliar[inicioVetor++];
+
+        //Passando o que sobrar da segunda metade para o vetor principal
+        while(inicioVAuxiliar<=posicaoFinal)
+            vetor[contador++] = vAuxiliar[inicioVAuxiliar++];
+    }
+
+
 
 /** req 6 **/
     void sort_decrescent() {
