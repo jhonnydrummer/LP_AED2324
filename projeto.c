@@ -310,11 +310,45 @@ char gerarPalavraAleatoria(char *palavra, int tamanho) {
 
 
 /** req 6 **/
-    void sort_decrescent() {
+    void sort_decrescent(int *vetor, int tamanho) {
         /**
          *  implementação do merge sort ou MSD para os chars(sugestão Prof. Torres)
          */
+    //Alocando um espaço na memória para servir de vetor auxiliar
+    int *vAuxiliar = malloc(sizeof(int)*tamanho);
+    //Chamando a função sort para começar o processo de divisão do vetor
+    sort_inverso(vetor,vAuxiliar,0,tamanho / 2, tamanho-1);
+    //Limpando a memória alocada
+    free(vAuxiliar);
     }
+
+void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, int posicaoFinal){
+    int contador;
+    int inicioVetor = posicaoInicial;
+    int inicioVAuxiliar = metade + 1;
+
+    for (contador = posicaoInicial; contador <= posicaoFinal; contador++)
+        vAuxiliar[contador] = vetor[contador];
+
+    contador = posicaoInicial;
+
+    while (inicioVetor <= metade && inicioVAuxiliar <= posicaoFinal) {
+        if (vAuxiliar[inicioVetor] >= vAuxiliar[inicioVAuxiliar]) // Inverte a lógica de comparação
+            vetor[contador++] = vAuxiliar[inicioVetor++];
+        else
+            vetor[contador++] = vAuxiliar[inicioVAuxiliar++];
+    }
+
+    while (inicioVetor <= metade)
+        vetor[contador++] = vAuxiliar[inicioVetor++];
+
+    while (inicioVAuxiliar <= posicaoFinal)
+        vetor[contador++] = vAuxiliar[inicioVAuxiliar++];
+
+}
+
+
+
 
     int main_projeto(int argc, const char *argv[]) {
 
