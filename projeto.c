@@ -2,7 +2,7 @@
     * ==================================================================================================================
     * PROJETO REALIZADO POR:                                                                                           *
     * - PEDRO MARQUES - 38688                                                                                          *
-    * - PEDRO MONTEIRO  -                                                                                              *
+    * - PEDRO MONTEIRO  - 2022110782                                                                                             *
     * - DIONE ARANTES - 40395                                                                                             *
     * ==================================================================================================================
     * @todo
@@ -385,7 +385,7 @@ void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, in
 
         //Criação da matrix Matrix1
         char **Matrix1 = create_Dynamic_Matrix(LINES, COLS);
-        fill_Matrix(Matrix1, LINES, COLS, palavra);
+        fill_Matrix(Matrix1, LINES, COLS, dadosC1);
 
         //fill_Matrix(Matrix1, LINES, COLS, (char[10]) palavra);
 
@@ -398,36 +398,34 @@ void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, in
          *
          */
 
-        print_Matrix(Matrix1, linhasC1,colunasC1);
+        print_Matrix(Matrix1, LINES,COLS);
 
         /* teste decimal to binary e string to binary
          * decimal to binary com os numeros funciona bem, o string to binary não está a dar o
          * resultado esperado, por exemplo "aba" segundo o enunciado tem que dar:
          * 101010111010 , mas deu isto : 101010101111101010
          */
-
         //   decimal_to_binary(8);
-        string_to_binary("a9A");
-        gerarPalavraAleatoria((char *) Matrix1, 20);
-
         // Exemplo de uso
-        int numRow = 5;
+        int numRow = 6;
         int numCollum = 5;
 
         char **matrix = malloc(numRow * sizeof(char *));
         for (int i = 0; i < numRow; i++) {
             matrix[i] = malloc(numCollum * sizeof(char));
         }
+        for(int j=0;j<numRow;j++){
+            gerarPalavraAleatoria(palavra, 7);
+            printf("\n");
+            add_to_matrix(Matrix1, j, 0, numRow, numCollum, valor);
+        }
 
-        gerarPalavraAleatoria(palavra, 7);
-
-        add_to_matrix(Matrix1, 2, 3, numRow, numCollum, palavra);
+        print_Matrix(Matrix1, LINES,COLS);
         //add_to_matrix(DynamicMatrixC1, 3, 4, 4, 5, valor,palavra);
         // a usar notação array funciona, apontadores já não(nao sei porquê)
         /*
          * free_Dynamic_Matrix(DynamicMatrixC1, linhasC1);
          * free_Dynamic_Matrix(DynamicMatrixC2, linhasC2);
          */
-
         return 0;
     }
