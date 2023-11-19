@@ -26,7 +26,7 @@ char gerarPalavraAleatoria(char *palavra, int tamanho);
 
 void remove_from_matrix(DynamicMatrix *matrix, int row, int col);
 
-void check_segment(char segment);
+void check_segment(char **matrix,char **matrix2);
 
 void seach_string(const char *sequence, const char *words[], int numWords);
 

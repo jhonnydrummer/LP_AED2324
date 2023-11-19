@@ -221,8 +221,17 @@ char gerarPalavraAleatoria(char *palavra, int tamanho) {
     }
 
 /** req 4 **/
-    void check_segment(char segment) {
-
+    void check_segment(char **matrix,char **matrix2) {
+        int value = 1 ;
+        for(int i=0;i<NUMROWS;i++) {
+            for (int j = 0; j < NUMROWS;j++){
+            value = strcmp(matrix[i],matrix2[j]);
+            if(value == 0){
+                printf("%s %s são combinações iguais",matrix[i],matrix2[j]);
+                value = 1;
+            }
+          }
+        }
     }
 
 /** req 5 **/
