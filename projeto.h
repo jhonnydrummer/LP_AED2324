@@ -6,15 +6,42 @@
 #define PROJETOLPAED1_PROJETO_H
 #define MAXCOLUMNS 10
 
-/**possivel estrutura**/
-typedef struct {
+/***********************************************************************************************************************
+****************************************** SECÇÃO DAS STRUCTURES*******************************************************
+***********************************************************************************************************************/
+
+typedef struct DynamicMatrix{
     char **data;
     int rows;
     int cols;
-} DynamicMatrix;
+} DYNAMICMATRIX;
 
+typedef struct Words_Holder{
+    DYNAMICMATRIX DynamicMatrixC1;
+    DYNAMICMATRIX DynamicMatrixC2;
+    DYNAMICMATRIX Matrix1;
+    DYNAMICMATRIX Matrix2;
+}WORDS_HOLDER;
+
+typedef struct Val_Ad_Words_Holder{
+    DYNAMICMATRIX DM1;
+    int date;
+    char code;
+}VAL_AD_WORDS_HOLDER;
+
+typedef struct Node_Ll_Words_Holder{
+    WORDS_HOLDER WH1;
+    int date;
+    char * pToNext;
+    char * pToPrevious;
+}NODE_LL_WORDS_HOLDER;
+/**********************************************************************************************************************/
+/**********************************************************************************************************************/
+/**********************************************************************************************************************/
 
 int main_projeto(int argc, const char * argv[]);
+
+char * AD_WORDS_HOLDER(int size, int N, char * pfirst); //Header da função para o Array Dinamico
 
 char * content_to_binary(char * string);
 
@@ -24,7 +51,7 @@ void add_to_matrix(char **matrix, int row, int collum, int numRow, int numCollum
 
 char gerarPalavraAleatoria(char *palavra, int tamanho);
 
-void remove_from_matrix(DynamicMatrix *matrix, int row, int col);
+void remove_from_matrix(DYNAMICMATRIX *matrix, int row, int col);
 
 void check_segment(char **matrix,char **matrix2);
 
@@ -47,5 +74,7 @@ int string_to_binary(char **matriz);
 int decimal_to_binary(int value,char** matriz,int i);
 
 void print_matrix(char ** matrix);
+
+
 
 #endif //PROJETOLPAED1_PROJETO_H
