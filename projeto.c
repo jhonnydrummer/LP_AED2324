@@ -99,55 +99,56 @@ void print_Matrix(char** matrix, int numRow, int numCollum) {
  * **/
 
 /** req 2 **/
-int decimal_to_binary(int value) {
+int decimal_to_binary(int value,char** matriz,int i) {
     //  printf("TESTE-> valor em decimal fica %d\n", value);
     //array com os valores de binario
     // counter for binary array
+
     printf("\nThe string in binary is ");
-    int i = 0;
-    int binaryNum[8];
+
+    int h = 0;
+    char binaryNum[8];
     while (value > 0) {
         // storing remainder in binary array
-        binaryNum[i] = value % 2;
+        binaryNum[h] = value % 2;
         value = value / 2;
-        i++;
+        h++;
     }
     // printing binary array in reverse order
-    for (int j = i - 1; j >= 0; j--) {
+    for (int j = h - 1; j >= 0; j--) {
         printf("%d", binaryNum[j]);
-        // matriz[][]=binaryNum[j]
-
-
-
+         matriz[i][100]=binaryNum[j];
     }
     return 0;//return pointer para matriz
 }
 /** req 2 **/
-    int string_to_binary(char *string) {
-
+    int string_to_binary(char** matriz) {
         /** a idea é pegar na string original
          * tirar o size
          * correr em loop e separar a string em diferentes char
          * enviar esse char para a funçao decimal_to_binary
          */
+         for(int i=0;i<7;i++) {
 
-        size_t size = strlen(string);
-        int value;
+             size_t size = strlen(*(matriz + i));
+             int value;
 
-        for (int i = 0; i < size; i++) {
-            value = string[i] - '0';
-            if (isupper(string[i])) {
-                value = value + 19;
-                decimal_to_binary(value);
-            } else if (value <= 9) {
-                decimal_to_binary(value);
-            } else {
-                value = value - 39;
-                decimal_to_binary(value);
-            }
-        }
-        printf("\n");
+             for (int j = 0; j < size; j++) {
+                 value = matriz[i][j] - '0';
+                 if (isupper(matriz[i][j])) {
+                     value = value + 19;
+                     decimal_to_binary(value,matriz,i);
+                 } else if (value <= 9) {
+                     decimal_to_binary(value,matriz,i);
+                 } else {
+                     value = value - 39;
+                     decimal_to_binary(value,matriz,i);
+                 }
 
+             }
+             printf("\n");
+
+         }
         return 0;
     }
 
@@ -225,9 +226,9 @@ char gerarPalavraAleatoria(char *palavra, int tamanho) {
         int value = 1 ;
         for(int i=0;i<NUMROWS;i++) {
             for (int j = 0; j < NUMROWS;j++){
-            value = strcmp(matrix[i],matrix2[j]);
+            value = strcmp(*(matrix+i),*(matrix2+j));
             if(value == 0){
-                printf("%s %s são combinações iguais",matrix[i],matrix2[j]);
+                printf("%s %s são combinações iguais",*(matrix+i),*(matrix2+j));
                 value = 1;
             }
           }
@@ -414,27 +415,23 @@ void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, in
          * resultado esperado, por exemplo "aba" segundo o enunciado tem que dar:
          * 101010111010 , mas deu isto : 101010101111101010
          */
-        //   decimal_to_binary(8);
-        // Exemplo de uso
-        int numRow = 6;
-        int numCollum = 5;
 
-        char **matrix = malloc(numRow * sizeof(char *));
-        for (int i = 0; i < numRow; i++) {
-            matrix[i] = malloc(numCollum * sizeof(char));
-        }
-        for(int j=0;j<numRow;j++){
+        // Exemplo de uso
+
+        for(int j=0;j<7;j++){
             gerarPalavraAleatoria(palavra, 7);
             printf("\n");
-            add_to_matrix(Matrix1, j, 0, numRow, numCollum, valor);
+            add_to_matrix(Matrix1, j, 0, 6, 20, valor);
         }
 
         print_Matrix(Matrix1, LINES,COLS);
+        string_to_binary(Matrix1);
         //add_to_matrix(DynamicMatrixC1, 3, 4, 4, 5, valor,palavra);
         // a usar notação array funciona, apontadores já não(nao sei porquê)
         /*
          * free_Dynamic_Matrix(DynamicMatrixC1, linhasC1);
          * free_Dynamic_Matrix(DynamicMatrixC2, linhasC2);
          */
+        print_Matrix(Matrix1, LINES,COLS);
         return 0;
     }

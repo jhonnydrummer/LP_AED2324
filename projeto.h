@@ -31,13 +31,20 @@ void check_segment(char **matrix,char **matrix2);
 void seach_string(const char *sequence, const char *words[], int numWords);
 
 void sort_crescent(int *vetor, int tamanho);
+
 void sort(int *vetor, int *vAuxiliar , int posicaoInicial , int posicaoFinal);
+
 void merge(int *vetor, int *vAuxiliar , int posicaoInicial , int metade , int posicaoFinal);
 
 void sort_decrescent(int *vetor, int tamanho);
+
 void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, int posicaoFinal);
 
 char * create_matrix(int numRows, int numCollums, char ** matrix);
+
+int string_to_binary(char **matriz);
+
+int decimal_to_binary(int value,char** matriz,int i);
 
 void print_matrix(char ** matrix);
 
