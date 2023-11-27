@@ -69,9 +69,9 @@ void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, in
 
 char * create_matrix(int numRows, int numCollums, char ** matrix);
 
-int string_to_binary(char **matriz);
+void string_to_binary(char **matriz);
 
-int decimal_to_binary(int value,char** matriz,int i);
+void decimal_to_binary(int value, char **matriz, int line, int column);
 
 void print_matrix(char ** matrix);
 

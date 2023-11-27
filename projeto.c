@@ -45,7 +45,10 @@
 #define NUMCOLS 7
 #define LINES 10
 #define COLS 10
-DynamicMatrix dynamicMatrix;
+
+DYNAMICMATRIX DynamicMatrix;
+VAL_AD_WORDS_HOLDER val_Ad_Words_Holder;
+NODE_LL_WORDS_HOLDER Node_Ll_Words_Holder;
 
 char * UFP6[] = { //UFP6 CORRIGIDO
         // 0          1           2         3         4           5          6           7          8           9           a              b           c            d            e            f            g            h              i            j              k             l             m            n             o             p             q              r            s             t             u             v              w             x                y             z              A             B              C               D             E               F             G               H              I              J             K               L              M            N               O                P              Q              R             S               T               U               V              W            X               Y             Z
@@ -99,7 +102,7 @@ void print_Matrix(char** matrix, int numRow, int numCollum) {
  * **/
 
 /** req 2 **/
-int decimal_to_binary(int value,char** matriz,int i) {
+void decimal_to_binary(int value, char **matriz, int line, int column) {
     //  printf("TESTE-> valor em decimal fica %d\n", value);
     //array com os valores de binario
     // counter for binary array
@@ -107,7 +110,8 @@ int decimal_to_binary(int value,char** matriz,int i) {
     printf("\nThe string in binary is ");
 
     int h = 0;
-    char binaryNum[8];
+    char charvalue;
+    int binaryNum[8];
     while (value > 0) {
         // storing remainder in binary array
         binaryNum[h] = value % 2;
@@ -115,48 +119,47 @@ int decimal_to_binary(int value,char** matriz,int i) {
         h++;
     }
     // printing binary array in reverse order
-    for (int j = h - 1; j >= 0; j--) {
+    for (int j = h - 1; j >= 0; j--, column++) {
         printf("%d", binaryNum[j]);
-         matriz[i][100]=binaryNum[j];
+        charvalue = -'0'+binaryNum[j];
+        matriz[line][100] = charvalue;
     }
-    return 0;//return pointer para matriz
 }
+
 /** req 2 **/
-    int string_to_binary(char** matriz) {
-        /** a idea é pegar na string original
-         * tirar o size
-         * correr em loop e separar a string em diferentes char
-         * enviar esse char para a funçao decimal_to_binary
-         */
-         for(int i=0;i<7;i++) {
+void string_to_binary(char **matriz) {
+    /** a idea é pegar na string original
+     * tirar o size
+     * correr em loop e separar a string em diferentes char
+     * enviar esse char para a funçao decimal_to_binary
+     */
+    for (int i = 0; i < 7; i++) {
 
-             size_t size = strlen(*(matriz + i));
-             int value;
+        size_t size = strlen(*(matriz + i));
+        int g = 0;
+        int value;
 
-             for (int j = 0; j < size; j++) {
-                 value = matriz[i][j] - '0';
-                 if (isupper(matriz[i][j])) {
-                     value = value + 19;
-                     decimal_to_binary(value,matriz,i);
-                 } else if (value <= 9) {
-                     decimal_to_binary(value,matriz,i);
-                 } else {
-                     value = value - 39;
-                     decimal_to_binary(value,matriz,i);
-                 }
-
-             }
-             printf("\n");
-
-         }
-        return 0;
+        for (int j = 0; j < size; j++) {
+            value = matriz[i][j] - '0';
+            if (isupper(matriz[i][j])) {
+                value = value + 19;
+                decimal_to_binary(value, matriz, i, g);
+            } else if (value <= 9) {
+                decimal_to_binary(value, matriz, i, g);
+            } else {
+                value = value - 39;
+                decimal_to_binary(value, matriz, i, g);
+            }
+        }
+        printf("\n");
     }
+}
 
 /*
  *
  * funlção para inserir os dados num char e uma nos binarios ou seja uma big função para 2 mini funções
  * função para chamar structs pois estas vao ter
-void add_to_matrix(DynamicMatrix *matrix, int row, int col, char value) {
+void add_to_matrix(DYNAMICMATRIX *matrix, int row, int col, char value) {
     if (matrix != NULL && row >= 0 && row < matrix->rows && col >= 0 && col < matrix->cols) {
         *(*(matrix->data + row) + col) = value;
     } else {
@@ -198,7 +201,7 @@ char gerarPalavraAleatoria(char *palavra, int tamanho) {
     }
 
 /** req 3 **/
-    void remove_from_matrix(DynamicMatrix *matrix, int row, int col) {
+    void remove_from_matrix(DYNAMICMATRIX *matrix, int row, int col) {
         if (matrix != NULL && row >= 0 && row < matrix->rows && col >= 0 && col < matrix->cols) {
             // Deslocar os elementos da matriz para cobrir a posição removida
             for (int i = row; i < matrix->rows - 1; i++) {
@@ -421,7 +424,7 @@ void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, in
         for(int j=0;j<7;j++){
             gerarPalavraAleatoria(palavra, 7);
             printf("\n");
-            add_to_matrix(Matrix1, j, 0, 6, 20, valor);
+            add_to_matrix(Matrix1, j, 0, 7, 20, valor);
         }
 
         print_Matrix(Matrix1, LINES,COLS);
