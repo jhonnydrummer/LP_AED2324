@@ -35,7 +35,7 @@
 
 #include "stdio.h"
 #include "stdlib.h"
-#include "string.h"
+#include <string.h>
 #include "projeto.h"
 #include "ctype.h"
 #include <time.h>
@@ -43,8 +43,6 @@
 #define NULL0 -1;
 #define NUMROWS 10
 #define NUMCOLS 7
-#define LINES 10
-#define COLS 10
 
 DYNAMICMATRIX DynamicMatrix;
 VAL_AD_WORDS_HOLDER val_Ad_Words_Holder;
@@ -110,7 +108,7 @@ void decimal_to_binary(int value, char **matriz, int line, int column) {
     printf("\nThe string in binary is ");
 
     int h = 0;
-    char charvalue;
+    char charvalue='\0';
     int binaryNum[8];
     while (value > 0) {
         // storing remainder in binary array
@@ -121,21 +119,21 @@ void decimal_to_binary(int value, char **matriz, int line, int column) {
     // printing binary array in reverse order
     for (int j = h - 1; j >= 0; j--, column++) {
         printf("%d", binaryNum[j]);
-        charvalue = -'0'+binaryNum[j];
-        matriz[line][100] = charvalue;
+        charvalue = binaryNum[j]+'0';
+        matriz[line][column] = charvalue;
     }
 }
 
 /** req 2 **/
-void string_to_binary(char **matriz) {
+void string_to_binary(char **matriz,int numpalavras) {
     /** a idea é pegar na string original
      * tirar o size
      * correr em loop e separar a string em diferentes char
      * enviar esse char para a funçao decimal_to_binary
      */
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < numpalavras; i++) {
 
-        size_t size = strlen(*(matriz + i));
+        int size = strlen(*(matriz + i));
         int g = 0;
         int value;
 
@@ -366,24 +364,26 @@ void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, in
         srand(time(NULL)); //gera a aleatoriedade
 
         char dadosC1[10][10] = {
-                {'o'},
-                {'O', 'l', 'a'},
-                {'x', 'p', 't', 'o'},
-                {'L', 'P'},
-                {'1'},
-                {'a', 'b', 'a'}
+                {"o"},
+                {"Ola"},
+                {"xpto"},
+                {"LP"},
+                {"1"},
+                {"aba"},
+                {"fgagji9"}
         };
 
         char dadosC2[10][10] = {
-                {'b'},
-                {'M', 'u', 'n', 'D', 'o'},
-                {'P', 'L'},
-                {'1', '1'}
+                {"b"},
+                {"MunDo"},
+                {"PL"},
+                {"11"}
         };
 
-        int linhasC1 = 6;
-        int colunasC1 = 10;
-        int linhasC2 = 10;
+
+        int linhasC1 = 7;
+        int colunasC1 = 7;
+        int linhasC2 = 6;
         int colunasC2 = 10;
         char palavra[8];
         char *valor = (char *) &palavra;
@@ -397,8 +397,8 @@ void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, in
         fill_Matrix(DynamicMatrixC2, linhasC2, colunasC2, dadosC2);
 
         //Criação da matrix Matrix1
-        char **Matrix1 = create_Dynamic_Matrix(LINES, COLS);
-        fill_Matrix(Matrix1, LINES, COLS, dadosC1);
+        char **Matrix1 = create_Dynamic_Matrix(linhasC1, colunasC1);
+        fill_Matrix(Matrix1, linhasC1, colunasC1, dadosC1);
 
         //fill_Matrix(Matrix1, LINES, COLS, (char[10]) palavra);
 
@@ -411,7 +411,7 @@ void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, in
          *
          */
 
-        print_Matrix(Matrix1, LINES,COLS);
+        print_Matrix(Matrix1, linhasC1,colunasC1);
 
         /* teste decimal to binary e string to binary
          * decimal to binary com os numeros funciona bem, o string to binary não está a dar o
@@ -421,20 +421,24 @@ void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, in
 
         // Exemplo de uso
 
-        for(int j=0;j<7;j++){
+       /* for(int j=0;j<7;j++){
             gerarPalavraAleatoria(palavra, 7);
             printf("\n");
             add_to_matrix(Matrix1, j, 0, 7, 20, valor);
-        }
+        }*/
+        print_Matrix(Matrix1, linhasC1,colunasC1);
 
-        print_Matrix(Matrix1, LINES,COLS);
-        string_to_binary(Matrix1);
+
+        print_Matrix(DynamicMatrixC1, linhasC1,colunasC1);
+
+        string_to_binary(DynamicMatrixC1,7);
+        //string_to_binary(Matrix1);
         //add_to_matrix(DynamicMatrixC1, 3, 4, 4, 5, valor,palavra);
         // a usar notação array funciona, apontadores já não(nao sei porquê)
         /*
          * free_Dynamic_Matrix(DynamicMatrixC1, linhasC1);
          * free_Dynamic_Matrix(DynamicMatrixC2, linhasC2);
          */
-        print_Matrix(Matrix1, LINES,COLS);
+        print_Matrix(DynamicMatrixC1, linhasC1,colunasC1);
         return 0;
     }
