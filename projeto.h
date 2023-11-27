@@ -57,15 +57,9 @@ void check_segment(char **matrix,char **matrix2);
 
 void seach_string(const char *sequence, const char *words[], int numWords);
 
-void sort_crescent(int *vetor, int tamanho);
-
-void sort(int *vetor, int *vAuxiliar , int posicaoInicial , int posicaoFinal);
-
-void merge(int *vetor, int *vAuxiliar , int posicaoInicial , int metade , int posicaoFinal);
-
-void sort_decrescent(int *vetor, int tamanho);
-
-void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, int posicaoFinal);
+void sort_crescent(int arr[], int left, int middle, int right);
+void mergeSort(int arr[], int left, int right);
+void sort_decrescent(int arr[], int left, int right);
 
 char * create_matrix(int numRows, int numCollums, char ** matrix);
 

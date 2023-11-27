@@ -248,111 +248,79 @@ char gerarPalavraAleatoria(char *palavra, int tamanho) {
     }
 
 /** req 6 **/
-    void sort_crescent(int *vetor, int tamanho) {
-        /**
-         *  implementação do merge sort (sugestão Prof. Torres)
-         */
+void sort_crescent(int matriz[], int left, int middle, int right) {
+    int i, j, k;
+    int n1 = middle - left + 1;
+    int n2 = right - middle;
 
-        //Alocando um espaço na memória para servir de vetor auxiliar
-        int *vAuxiliar = malloc(sizeof(int)*tamanho);
-        //Chamando a função sort para começar o processo de divisão do vetor
-        sort(vetor,vAuxiliar,0,tamanho-1);
-        free(vAuxiliar);
+    int *L = (int *)malloc(n1 * sizeof(int));
+    int *R = (int *)malloc(n2 * sizeof(int));
 
-    }
+    for (i = 0; i < n1; i++)
+        L[i] = matriz[left + i];
+    for (j = 0; j < n2; j++)
+        R[j] = matriz[middle + 1 + j];
 
-    void sort(int *vetor, int *vAuxiliar , int posicaoInicial , int posicaoFinal){
-        //Verificando se o vetor tem tamanho maior que 1
-        if(posicaoInicial>=posicaoFinal)
-            return;
+    i = 0;
+    j = 0;
+    k = left;
 
-        //Com o vetor de tamanho maior que 1 ele divide esse vetor pegando a posicao que fica na metade do vetor;
-        int metade = (posicaoInicial+posicaoFinal) / 2;
-
-        //Fazendo uma chamada recursiva para ordenar a primeira metade do vetor
-        sort(vetor,vAuxiliar,posicaoInicial,metade);
-        //Fazendo uma chamada recursiva para ordenar a segunda metade do vetor
-        sort(vetor,vAuxiliar,metade+1,posicaoFinal);
-
-        //Faz uma verificação para saber se os vetores estão ordenados entre si
-        if(vetor[metade]<=vetor[metade+1])
-            return;
-
-        //Chamando a função merge para reorganizar o vetor
-        merge(vetor,vAuxiliar,posicaoInicial,metade,posicaoFinal);
-
-    }
-
-    void merge(int *vetor, int *vAuxiliar , int posicaoInicial , int metade , int posicaoFinal){
-
-        int contador;
-        //Armazena a posição inicial do vetor principal
-        int inicioVetor = posicaoInicial;
-        //Armazena a posição inicial do vetor auxiliar
-        int inicioVAuxiliar = metade + 1;
-
-        //Fazendo uma cópia do vetor princpal para o vetor auxiliar
-        for(contador = posicaoInicial ; contador <= posicaoFinal ; contador ++)
-            vAuxiliar[contador]=vetor[contador];
-
-        //Reiniciando o contador
-        contador = posicaoInicial;
-
-        //Percorrendo os vetores
-        while(inicioVetor <= metade && inicioVAuxiliar <= posicaoFinal){
-            //Verifica qual valores são maior e menor  e reorganiza o vator principal
-            if(vAuxiliar[inicioVetor]<vAuxiliar[inicioVAuxiliar])
-                vetor[contador++]=vAuxiliar[inicioVetor++];
-            else
-                vetor[contador++]=vAuxiliar[inicioVAuxiliar++];
-
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            matriz[k] = L[i];
+            i++;
+        } else {
+            matriz[k] = R[j];
+            j++;
         }
-
-        //Passando o que sobrar da primeira metade para o vetor principal
-        while(inicioVetor<=metade)
-            vetor[contador++] = vAuxiliar[inicioVetor++];
-
-        //Passando o que sobrar da segunda metade para o vetor principal
-        while(inicioVAuxiliar<=posicaoFinal)
-            vetor[contador++] = vAuxiliar[inicioVAuxiliar++];
+        k++;
     }
+
+    while (i < n1) {
+        matriz[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        matriz[k] = R[j];
+        j++;
+        k++;
+    }
+
+    free(L);
+    free(R);
+}
+
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        int middle = left + (right - left) / 2;
+
+        mergeSort(arr, left, middle);
+        mergeSort(arr, middle + 1, right);
+
+        sort_crescent(arr, left, middle, right);
+        sort_decrescent(arr, left, right);
+    }
+
+}
 
 
 
 /** req 6 **/
-    void sort_decrescent(int *vetor, int tamanho) {
-        /**
-         *  implementação do merge sort ou MSD para os chars(sugestão Prof. Torres)
-         */
-    //Alocando um espaço na memória para servir de vetor auxiliar
-    int *vAuxiliar = malloc(sizeof(int)*tamanho);
-    //Chamando a função sort para começar o processo de divisão do vetor
-    sort_inverso(vetor,vAuxiliar,0,tamanho / 2, tamanho-1);
-    free(vAuxiliar);
+void sort_decrescent(int arr[], int left, int right) {
+    mergeSort(arr, left, right);
+
+    int i = left;
+    int j = right;
+
+    while (i < j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        i++;
+        j--;
     }
-
-void sort_inverso(int *vetor, int *vAuxiliar, int posicaoInicial, int metade, int posicaoFinal){
-    int contador;
-    int inicioVetor = posicaoInicial;
-    int inicioVAuxiliar = metade + 1;
-
-    for (contador = posicaoInicial; contador <= posicaoFinal; contador++)
-        vAuxiliar[contador] = vetor[contador];
-
-    contador = posicaoInicial;
-
-    while (inicioVetor <= metade && inicioVAuxiliar <= posicaoFinal) {
-        if (vAuxiliar[inicioVetor] >= vAuxiliar[inicioVAuxiliar]) // Inverte a lógica de comparação
-            vetor[contador++] = vAuxiliar[inicioVetor++];
-        else
-            vetor[contador++] = vAuxiliar[inicioVAuxiliar++];
-    }
-
-    while (inicioVetor <= metade)
-        vetor[contador++] = vAuxiliar[inicioVetor++];
-
-    while (inicioVAuxiliar <= posicaoFinal)
-        vetor[contador++] = vAuxiliar[inicioVAuxiliar++];
 
 }
 
